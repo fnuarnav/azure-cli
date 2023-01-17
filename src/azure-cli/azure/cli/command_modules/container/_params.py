@@ -74,6 +74,8 @@ def load_arguments(self, _):
         c.argument('secrets_mount_path', validator=validate_volume_mount_path, help="The path within the container where the secrets volume should be mounted. Must not contain colon ':'.")
         c.argument('file', options_list=['--file', '-f'], help="The path to the input file.")
         c.argument('zone', help="The zone to place the container group.")
+        c.argument('priority', help="The priority of the container group")
+        c.argument('sku', help="The SKU of the container group")
 
     with self.argument_context('container create', arg_group='Managed Service Identity') as c:
         c.argument('assign_identity', nargs='*', validator=validate_msi, help="Space-separated list of assigned identities. Assigned identities are either user assigned identities (resource IDs) and / or the system assigned identity ('[system]'). See examples for more info.")
@@ -109,6 +111,9 @@ def load_arguments(self, _):
         c.argument('gitrepo_dir', validator=validate_gitrepo_directory, help="The target directory path in the git repository. Must not contain '..'.")
         c.argument('gitrepo_revision', help='The commit hash for the specified revision')
         c.argument('gitrepo_mount_path', validator=validate_volume_mount_path, help="The path within the container where the git repo volume should be mounted. Must not contain colon ':'.")
+
+    with self.argument_context('container create', arg_group='Confidential Container Group') as c:
+        c.argument('cce_policy', help="The CCE policy for the confidential container group")
 
     with self.argument_context('container logs') as c:
         c.argument('container_name', help='The container name to tail the logs. If omitted, the first container in the container group will be chosen')
